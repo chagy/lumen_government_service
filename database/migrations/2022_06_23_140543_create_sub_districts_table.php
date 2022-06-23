@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('districts', function (Blueprint $table) {
+        Schema::create('sub_districts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('province_id')->comment('relations provinces')->references('id')->on('provinces')->cascadeOnDelete();
-            $table->string('dist_name')->comment('ชื่ออำเภอ');
-            $table->text('dist_desc')->nullable()->comment('รายละเอียด');
+            $table->foreignId('district_id')->comment('relations districts')->references('id')->on('districts')->cascadeOnDelete();
+            $table->string('sub_dist_name')->comment('ชื่อตำบล');
+            $table->text('sub_desc')->nullable()->comment('รายละเอียด');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('districts');
+        Schema::dropIfExists('sub_districts');
     }
 };
