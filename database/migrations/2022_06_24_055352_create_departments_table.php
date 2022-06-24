@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('positions', function (Blueprint $table) {
+        Schema::create('departments', function (Blueprint $table) {
             $table->id();
-            $table->string('posi_name')->unique()->comment('ชื่อตำแหน่ง');
-            $table->text('posi_desc')->nullable()->comment('รายละเอียด');
+            $table->foreignId('parent_id')->nullable()->comment('relation departments')->references('id')->on('departments')->nullOnDelete();
+            $table->string('depa_name')->unique()->comment('ชื่อแผนก');
+            $table->text('depa_desc')->nullable()->comment('รายละเอียด');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('positions');
+        Schema::dropIfExists('departments');
     }
 };
