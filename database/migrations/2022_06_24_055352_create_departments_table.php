@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('departments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('parent_id')->nullable()->comment('relation departments')->references('id')->on('departments')->nullOnDelete();
+            $table->string('depa_num')->comment('เลขตก ประจำแผนก');
             $table->string('depa_name')->unique()->comment('ชื่อแผนก');
             $table->text('depa_desc')->nullable()->comment('รายละเอียด');
             $table->timestamps();
