@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ProvinceController;
+
 /** @var \Laravel\Lumen\Routing\Router $router */
 
 /*
@@ -13,10 +15,13 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
-
-$router->get('/test',function() {
-    return 'test';
+$router->group([
+    'prefix' => 'province',
+    'as' => 'province.'
+], function () use ($router) {
+    $router->get('/',['as' => 'index', 'uses' => 'ProvinceController@index']);
+    $router->post('/',['as' => 'store', 'uses' => 'ProvinceController@store']);
+    $router->get('/{province}/show',['as' => 'show', 'uses' => 'ProvinceController@show']);
+    $router->put('/{province}/update',['as' => 'update', 'uses' => 'ProvinceController@update']);
+    $router->delete('/{province}/delete',['as' => 'delete', 'uses' => 'ProvinceController@destroy']);
 });
