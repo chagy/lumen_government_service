@@ -49,6 +49,14 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if ($exception instanceof ModelNotFoundException) {
+            $model = strtolower(class_basename($exception->getModel()));
+
+            return response()->json([
+                'error' => "Does not exist any instance of {$model} with the given id"
+            ],404);
+        }
+
         return parent::render($request, $exception);
     }
 }

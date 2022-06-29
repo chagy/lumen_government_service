@@ -21,7 +21,7 @@ $router->group([
 ], function () use ($router) {
     $router->get('/',['as' => 'index', 'uses' => 'ProvinceController@index']);
     $router->post('/',['as' => 'store', 'uses' => 'ProvinceController@store']);
-    $router->get('/{province}/show',['as' => 'show', 'uses' => 'ProvinceController@show']);
-    $router->put('/{province}/update',['as' => 'update', 'uses' => 'ProvinceController@update']);
-    $router->delete('/{province}/delete',['as' => 'delete', 'uses' => 'ProvinceController@destroy']);
+    $router->get('/{province}',['as' => 'show', 'uses' => 'ProvinceController@show']);
+    $router->put('/{province}',['as' => 'update', 'uses' => 'ProvinceController@update']);
+    $router->delete('/{province}',['as' => 'delete', 'uses' => 'ProvinceController@destroy']);
 });
