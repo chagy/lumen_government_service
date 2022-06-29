@@ -24,4 +24,6 @@ $router->group([
     $router->get('/{province}',['as' => 'show', 'uses' => 'ProvinceController@show']);
     $router->put('/{province}',['as' => 'update', 'uses' => 'ProvinceController@update']);
     $router->delete('/{province}',['as' => 'delete', 'uses' => 'ProvinceController@destroy']);
+    $router->put('/restore/{province}',['as' => 'restore', 'uses' => 'ProvinceController@restore']);
+    $router->delete('/force-delete/{province}',['as' => 'forceDelete', 'uses' => 'ProvinceController@forceDelete']);
 });

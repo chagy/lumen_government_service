@@ -124,4 +124,26 @@ class ProvinceController extends Controller
             'message' => 'ลบข้อมูลเรียบร้อย'
         ],204);
     }
+
+    public function restore($province)
+    {
+        $province = Province::onlyTrashed()->findOrFail($province);
+        $province->restore();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'คืนข้อมูลเรียบร้อย'
+        ],204);
+    }
+
+    public function forceDelete($province)
+    {
+        $province = Province::withTrashed()->findOrFail($province);
+        $province->forceDelete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'ลบข้อมูลเรียบร้อย'
+        ],204);
+    }
 }
