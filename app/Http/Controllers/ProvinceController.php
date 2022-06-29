@@ -52,7 +52,7 @@ class ProvinceController extends Controller
         ]);
 
         return response()->json([
-            'save' => true,
+            'success' => true,
             'response' => $province
         ], 201);
     }
@@ -103,7 +103,7 @@ class ProvinceController extends Controller
         ]);
 
         return response()->json([
-            'save' => true,
+            'success' => true,
             'data' => $province
         ],202);
     }
@@ -114,8 +114,14 @@ class ProvinceController extends Controller
      * @param  \App\Province  $province
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Province $province)
+    public function destroy($province)
     {
-        //
+        $province = Province::findOrFail($province);
+        $province->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'ลบข้อมูลเรียบร้อย'
+        ],204);
     }
 }
