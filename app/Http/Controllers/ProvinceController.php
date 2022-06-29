@@ -79,9 +79,33 @@ class ProvinceController extends Controller
      * @param  \App\Province  $province
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Province $province)
+    public function update(Request $request, $province)
     {
-        //
+        $province = Province::findOrFail($province);
+
+        $validator = Validator::make($request->all(),[
+            'prov_name' => 'required|unique:provinces',
+        ],[
+            'prov_name.required' => 'กรุณากรอกชื่อจังหวัด',
+            'prov_name.unique' => 'กรุณากรอกชื่อจังหวัดใหม่ อันเดิมซ้ำ'
+        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'error' => true,
+                'response' => $validator->errors()
+            ], 401);
+        }
+
+        $province->update([
+            'prov_name' => $request->prov_name,
+            'prov_desc' => $request->prov_desc
+        ]);
+
+        return response()->json([
+            'save' => true,
+            'data' => $province
+        ],202);
     }
 
     /**
