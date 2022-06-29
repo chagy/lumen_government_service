@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\ProvinceController;
-
 /** @var \Laravel\Lumen\Routing\Router $router */
 
 /*
@@ -14,6 +12,18 @@ use App\Http\Controllers\ProvinceController;
 | and give it the Closure to call when that URI is requested.
 |
 */
+$router->group([
+    'prefix' => 'district',
+    'as' => 'district.'
+], function () use ($router) {
+    $router->get('/',['as' => 'index', 'uses' => 'DistrictController@index']);
+    $router->post('/',['as' => 'store', 'uses' => 'DistrictController@store']);
+    $router->get('/{district}',['as' => 'show', 'uses' => 'DistrictController@show']);
+    $router->put('/{district}',['as' => 'update', 'uses' => 'DistrictController@update']);
+    $router->delete('/{district}',['as' => 'delete', 'uses' => 'DistrictController@destroy']);
+    $router->put('/restore/{district}',['as' => 'restore', 'uses' => 'DistrictController@restore']);
+    $router->delete('/force-delete/{district}',['as' => 'forceDelete', 'uses' => 'DistrictController@forceDelete']);
+});
 
 $router->group([
     'prefix' => 'province',
