@@ -93,7 +93,7 @@ class ProvinceController extends Controller
         if($validator->fails()) {
             return response()->json([
                 'error' => true,
-                'response' => $validator->errors()
+                'messages' => $validator->errors()
             ], 401);
         }
 
