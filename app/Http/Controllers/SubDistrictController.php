@@ -84,4 +84,14 @@ class SubDistrictController extends Controller
             'data' => new SubDistrictResource($sub_district)
         ]);
     }
+
+    public function destroy($sub_district) {
+        $sub_district = SubDistrict::findOrFail($sub_district);
+        $sub_district->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'ลบข้อมูลเรียบร้อย'
+        ],204);
+    }
 }
