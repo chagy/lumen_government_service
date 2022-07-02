@@ -43,7 +43,7 @@ class ProvinceController extends Controller
         if($validator->fails()) {
             return response()->json([
                 'error' => true,
-                'response' => $validator->errors()
+                'errors' => $validator->errors()
             ], 401);
         }
 
@@ -94,7 +94,7 @@ class ProvinceController extends Controller
         if($validator->fails()) {
             return response()->json([
                 'error' => true,
-                'messages' => $validator->errors()
+                'errors' => $validator->errors()
             ], 401);
         }
 

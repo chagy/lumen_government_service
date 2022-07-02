@@ -16,8 +16,9 @@ return new class extends Migration
         Schema::create('sub_districts', function (Blueprint $table) {
             $table->id();
             $table->foreignId('district_id')->comment('relations districts')->references('id')->on('districts')->cascadeOnDelete();
-            $table->string('sub_dist_name')->comment('ชื่อตำบล');
-            $table->text('sub_desc')->nullable()->comment('รายละเอียด');
+            $table->string('subd_name')->comment('ชื่อตำบล');
+            $table->text('subd_desc')->nullable()->comment('รายละเอียด');
+            $table->string('subd_zipcode')->comment('รหัสไปรษณีย์');
             $table->timestamps();
             $table->softDeletes();
         });

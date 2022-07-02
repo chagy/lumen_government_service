@@ -11,8 +11,10 @@ class SubDistrict extends Model
 
     protected $fillable = [
         'district_id',
-        'sub_dist_name',
-        'sub_desc',
+        'subd_name',
+        'subd_desc',
+        'subd_zipcode'
+
     ];
 
     public function district()

@@ -36,7 +36,7 @@ class DistrictController extends Controller
         if($validator->fails()) {
             return response()->json([
                 'error' => true,
-                'messages' => $validator->errors()
+                'errors' => $validator->errors()
             ],401);
         }
 
@@ -59,6 +59,13 @@ class DistrictController extends Controller
             'province_id' => 'required|integer',
             'dist_name' => 'required'
         ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'error' => true,
+                'errors' => $validator->errors()
+            ],401);
+        }
 
         $district->update([
             'province_id' => $request->province_id,
