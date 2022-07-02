@@ -1,17 +1,18 @@
 <?php
 
-/** @var \Laravel\Lumen\Routing\Router $router */
+$router->group([
+    'prefix' => 'sub-district',
+    'as' => 'sub.district.'
+], function () use ($router) {
+    $router->get('/',['as' => 'index', 'uses' => 'SubDistrictController@index']);
+    $router->post('/',['as' => 'store', 'uses' => 'SubDistrictController@store']);
+    $router->get('/{sub_district}',['as' => 'show', 'uses' => 'SubDistrictController@show']);
+    $router->put('/{sub_district}',['as' => 'update', 'uses' => 'SubDistrictController@update']);
+    $router->delete('/{sub_district}',['as' => 'delete', 'uses' => 'SubDistrictController@destroy']);
+    $router->put('/restore/{sub_district}',['as' => 'restore', 'uses' => 'SubDistrictController@restore']);
+    $router->delete('/force-delete/{sub_district}',['as' => 'forceDelete', 'uses' => 'SubDistrictController@forceDelete']);
+});
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It is a breeze. Simply tell Lumen the URIs it should respond to
-| and give it the Closure to call when that URI is requested.
-|
-*/
 $router->group([
     'prefix' => 'district',
     'as' => 'district.'

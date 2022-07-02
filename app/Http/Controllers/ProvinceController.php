@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Province;
 use Illuminate\Http\Request;
+use App\Http\Resources\ProvinceResource;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 
@@ -16,10 +17,10 @@ class ProvinceController extends Controller
      */
     public function index()
     {
-        $provinces = Province::all();
+        $provinces = Province::paginate(20);
 
         return response()->json([
-            'data' => $provinces
+            'data' => ProvinceResource::collection($provinces)->response()->getData(true)
         ], 200);
     }
 
