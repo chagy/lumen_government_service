@@ -71,4 +71,14 @@ class DistrictController extends Controller
             'data' => new DistrictResource($district)
         ]);
     }
+
+    public function destroy($district) {
+        $district = District::findOrFail($district);
+        $district->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'ลบข้อมูลเรียบร้อย'
+        ],204);
+    }
 }
