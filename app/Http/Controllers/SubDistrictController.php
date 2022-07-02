@@ -18,6 +18,15 @@ class SubDistrictController extends Controller
         ]);
     }
 
+    public function show($sub_district) {
+        $sub_district = SubDistrict::findOrFail($sub_district);
+
+        return response()->json([
+            'success' => true,
+            'data' => new SubDistrictResource($sub_district)
+        ]);
+    }
+
     public function store(Request $request) {
         $validator = Validator::make($request->all(),[
             'district_id' => 'required|integer',
