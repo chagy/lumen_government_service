@@ -42,4 +42,24 @@ class DistrictController extends Controller
             'data' => new DistrictResource($district)
         ]);
     }
+
+    public function update(Request $request, $district) {
+        $district = District::findOrFail($district);
+
+        $validator = Validator::make($request->all(),[
+            'province_id' => 'required|integer',
+            'dist_name' => 'required'
+        ]);
+
+        $district->update([
+            'province_id' => $request->province_id,
+            'dist_name' => $request->dist_name,
+            'dist_desc' => $request->dist_desc
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'data' => new DistrictResource($district)
+        ]);
+    }
 }
