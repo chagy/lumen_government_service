@@ -91,4 +91,14 @@ class DistrictController extends Controller
             'message' => 'คืนข้อมูลเรียบร้อย'
         ],204);
     }
+
+    public function forceDelete($district) {
+        $district = District::onlyTrashed()->findOrFail($district);
+        $district->forceDelete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'ลบข้อมูลเรียบร้อย'
+        ],204);
+    }
 }
