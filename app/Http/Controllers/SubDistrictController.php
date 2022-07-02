@@ -54,4 +54,34 @@ class SubDistrictController extends Controller
             'data' => new SubDistrictResource($sub_district)
         ]);
     }
+
+    public function update(Request $request,$sub_district) {
+        $sub_district = SubDistrict::findOrFail($sub_district);
+
+        $validator = Validator::make($request->all(),[
+            'district_id' => 'required|integer',
+            'subd_name' => 'required',
+            'subd_desc' => 'nullable',
+            'subd_zipcode' => 'required'
+        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'error' => true,
+                'errors' => $validator->errors()
+            ]);
+        }
+
+        $sub_district->update([
+            'district_id' => $request->district_id,
+            'subd_name' => $request->subd_name,
+            'subd_desc' => $request->subd_desc,
+            'subd_zipcode' => $request->subd_zipcode
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'data' => new SubDistrictResource($sub_district)
+        ]);
+    }
 }
