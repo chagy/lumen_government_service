@@ -94,4 +94,14 @@ class SubDistrictController extends Controller
             'message' => 'ลบข้อมูลเรียบร้อย'
         ],204);
     }
+
+    public function restore($sub_district) {
+        $sub_district = SubDistrict::onlyTrashed()->findOrFail($sub_district);
+        $sub_district->restore();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'คืนข้อมูลเรียบร้อย'
+        ],204);
+    }
 }
