@@ -104,4 +104,14 @@ class SubDistrictController extends Controller
             'message' => 'คืนข้อมูลเรียบร้อย'
         ],204);
     }
+
+    public function forceDelete($sub_district) {
+        $sub_district = SubDistrict::onlyTrashed()->findOrFail($sub_district);
+        $sub_district->forceDelete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'ลบข้อมูลเรียบร้อย'
+        ],204);
+    }
 }
