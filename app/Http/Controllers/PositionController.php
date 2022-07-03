@@ -86,4 +86,14 @@ class PositionController extends Controller
             'message' => 'ลบข้อมูลเรียบร้อย'
         ],204);
     }
+
+    public function restore($position) {
+        $position = Position::onlyTrashed()->findOrFail($position);
+        $position->restore();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'คืนข้อมูลเรียบร้อย'
+        ],204);
+    }
 }
