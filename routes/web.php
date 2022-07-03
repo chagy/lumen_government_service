@@ -1,6 +1,19 @@
 <?php
 
 $router->group([
+    'prefix' => 'position',
+    'as' => 'position.'
+], function () use ($router) {
+    $router->get('/',['as' => 'index', 'uses' => 'PositionController@index']);
+    $router->post('/',['as' => 'store', 'uses' => 'PositionController@store']);
+    $router->get('/{position}',['as' => 'show', 'uses' => 'PositionController@show']);
+    $router->put('/{position}',['as' => 'update', 'uses' => 'PositionController@update']);
+    $router->delete('/{position}',['as' => 'delete', 'uses' => 'PositionController@destroy']);
+    $router->put('/restore/{position}',['as' => 'restore', 'uses' => 'PositionController@restore']);
+    $router->delete('/force-delete/{position}',['as' => 'forceDelete', 'uses' => 'PositionController@forceDelete']);
+});
+
+$router->group([
     'prefix' => 'sub-district',
     'as' => 'sub.district.'
 ], function () use ($router) {
