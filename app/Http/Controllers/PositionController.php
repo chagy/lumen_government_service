@@ -50,4 +50,30 @@ class PositionController extends Controller
             'data' => new PositionResource($position)
         ]);
     }
+
+    public function update(Request $request,$position) {
+        $position = Position::findOrFail($position);
+
+        $validator = Validator::make($request->all(),[
+            'posi_name' => 'required|unique:positions,posi_name,'.$position->id,
+            'posi_desc' => 'nullable'
+        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'error' => true,
+                'errors' => $validator->errors()
+            ]);
+        }
+
+        $position->update([
+            'posi_name' => $request->posi_name,
+            'posi_desc' => $request->posi_desc
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'data' => new PositionResource($position)
+        ]);
+    }
 }
