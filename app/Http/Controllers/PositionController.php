@@ -76,4 +76,14 @@ class PositionController extends Controller
             'data' => new PositionResource($position)
         ]);
     }
+
+    public function destroy($position) {
+        $position = Position::findOrFail($position);
+        $position->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'ลบข้อมูลเรียบร้อย'
+        ],204);
+    }
 }
