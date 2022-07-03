@@ -16,4 +16,13 @@ class PositionController extends Controller
             'data' => PositionResource::collection($positions)->response()->getData(true)
         ]);
     }
+
+    public function show($position) {
+        $position = Position::findOrFail($position);
+
+        return response()->json([
+            'success' => true,
+            'data' => new PositionResource($position)
+        ]);
+    }
 }
