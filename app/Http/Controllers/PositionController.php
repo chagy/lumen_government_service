@@ -96,4 +96,14 @@ class PositionController extends Controller
             'message' => 'คืนข้อมูลเรียบร้อย'
         ],204);
     }
+
+    public function forceDelete($position) {
+        $position = Position::onlyTrashed()->findOrFail($position);
+        $position->forceDelete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'ลบข้อมูลเรียบร้อย'
+        ],204);
+    }
 }
