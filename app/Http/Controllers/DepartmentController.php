@@ -98,4 +98,14 @@ class DepartmentController extends Controller
             'message' => 'คืนข้อมูลเรียบร้อย'
         ],204);
     }
+
+    public function forceDelete($department) {
+        $department = Department::onlyTrashed()->findOrFail($department);
+        $department->forceDelete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'ลบข้อมูลเรียบร้อย'
+        ],204);
+    }
 }
