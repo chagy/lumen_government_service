@@ -1,6 +1,19 @@
 <?php
 
 $router->group([
+    'prefix' => 'department',
+    'as' => 'department.'
+], function () use ($router) {
+    $router->get('/',['as' => 'index', 'uses' => 'DepartmentController@index']);
+    $router->post('/',['as' => 'store', 'uses' => 'DepartmentController@store']);
+    $router->get('/{department}',['as' => 'show', 'uses' => 'DepartmentController@show']);
+    $router->put('/{department}',['as' => 'update', 'uses' => 'DepartmentController@update']);
+    $router->delete('/{department}',['as' => 'delete', 'uses' => 'DepartmentController@destroy']);
+    $router->put('/restore/{department}',['as' => 'restore', 'uses' => 'DepartmentController@restore']);
+    $router->delete('/force-delete/{department}',['as' => 'forceDelete', 'uses' => 'DepartmentController@forceDelete']);
+});
+
+$router->group([
     'prefix' => 'position',
     'as' => 'position.'
 ], function () use ($router) {
