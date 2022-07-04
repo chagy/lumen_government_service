@@ -55,4 +55,27 @@ class DepartmentController extends Controller
             'data' => new DepartmentResource($department)
         ],201);
     }
+
+    public function update(Request $request,$department) {
+        $department = Department::findOrFail($department);
+
+        $validator = Validator::make($request->all(),[
+            'parent_id' => 'nullable',
+            'depa_num'  => 'required',
+            'depa_name' => 'required|unique:departments,depa_name,'.$department->id,
+            'depa_desc' => 'nullable',
+        ]);
+
+        $department->update([
+            'parent_id' => $request->parent_id,
+            'depa_num'  => $request->depa_num,
+            'depa_name' => $request->depa_name,
+            'depa_desc' => $request->depa_desc,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'data' => new DepartmentResource($department)
+        ],201);
+    }
 }
