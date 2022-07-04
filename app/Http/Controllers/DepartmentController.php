@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Department;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\DepartmentResource;
 
 class DepartmentController extends Controller
@@ -24,5 +25,34 @@ class DepartmentController extends Controller
             'success' => true,
             'data' => new DepartmentResource($department)
         ],200);
+    }
+
+    public function store(Request $request) {
+
+        $validator = Validator::make($request->all(),[
+            'parent_id' => 'nullable',
+            'depa_num'  => 'required',
+            'depa_name' => 'required|unique:departments',
+            'depa_desc' => 'nullable',
+        ]);
+
+        if($validator->fails()) {
+            return response()->json([
+                'error' => true,
+                'errors' => $validator->errors()
+            ],400);
+        }
+
+        $department = Department::create([
+            'parent_id' => $request->parent_id,
+            'depa_num'  => $request->depa_num,
+            'depa_name' => $request->depa_name,
+            'depa_desc' => $request->depa_desc,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'data' => new DepartmentResource($department)
+        ],201);
     }
 }
