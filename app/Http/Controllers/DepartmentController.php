@@ -78,4 +78,14 @@ class DepartmentController extends Controller
             'data' => new DepartmentResource($department)
         ],201);
     }
+
+    public function destroy($department) {
+        $department = Department::findOrFail($department);
+        $department->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'ลบข้อมูลเรียบร้อย'
+        ],204);
+    }
 }
