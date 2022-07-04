@@ -14,6 +14,15 @@ class DepartmentController extends Controller
         return response()->json([
             'success' => true,
             'data' => DepartmentResource::collection($departments)
-        ]);
+        ],200);
+    }
+
+    public function show($department) {
+        $department = Department::findOrFail($department);
+
+        return response()->json([
+            'success' => true,
+            'data' => new DepartmentResource($department)
+        ],200);
     }
 }
