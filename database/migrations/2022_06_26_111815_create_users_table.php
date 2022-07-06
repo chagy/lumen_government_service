@@ -33,9 +33,9 @@ return new class extends Migration
             $table->foreignId('position_id')->comment('relations positions')->references('id')->on('positions')->cascadeOnDelete();
             $table->foreignId('department_id')->comment('relations departments')->references('id')->on('departments')->cascadeOnDelete();
             $table->foreignId('sub_department_id')->comment('relations departments')->references('id')->on('departments')->cascadeOnDelete();
-            $table->foreignId('leader_id')->comment('relations users')->references('id')->on('users')->cascadeOnDelete();
-            $table->foreignId('commander_id')->comment('relations users')->references('id')->on('users')->cascadeOnDelete();
-            $table->foreignId('director_id')->comment('relations users')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreignId('leader_id')->nullable()->comment('relations users')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreignId('commander_id')->nullable()->comment('relations users')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreignId('director_id')->nullable()->comment('relations users')->references('id')->on('users')->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });

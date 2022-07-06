@@ -99,7 +99,7 @@ $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 $app->register(Laravel\Passport\PassportServiceProvider::class);
 $app->register(Dusterio\LumenPassport\PassportServiceProvider::class);
 
-
+$app->configure('auth');
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes
@@ -117,6 +117,6 @@ $app->router->group([
     require __DIR__.'/../routes/web.php';
 });
 
-$app->configure('auth');
+
 
 return $app;

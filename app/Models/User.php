@@ -53,6 +53,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     ];
 
     public function findForPassport($username) {
-        return $this->where('username', $username)->first();
+       return self::where('username', $username)->first(); // change column name whatever you use in credentials
     }
 }

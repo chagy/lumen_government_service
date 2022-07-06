@@ -1,4 +1,9 @@
 <?php
+$router->post('/auth/register',['as' => 'register','uses' => 'AuthController@register']);
+
+$router->get('/test/auth',['middleware' => 'auth:api',function() {
+    return 'work';
+}]);
 
 $router->group([
     'prefix' => 'department',
