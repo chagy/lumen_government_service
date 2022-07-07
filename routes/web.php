@@ -2,8 +2,23 @@
 $router->post('/auth/register',['as' => 'register','uses' => 'AuthController@register']);
 
 $router->get('/test/auth',['middleware' => 'auth:api',function() {
-    return 'work';
+    return auth()->user();
 }]);
+
+
+$router->group([
+    'prefix'        => 'government-service',
+    'as'            => 'government.service.',
+    'middleware'    => 'auth:api'
+], function () use ($router) {
+    $router->get('/',['as' => 'index', 'uses' => 'GovernmentServiceController@index']);
+    $router->post('/',['as' => 'store', 'uses' => 'GovernmentServiceController@store']);
+    $router->get('/{department}',['as' => 'show', 'uses' => 'GovernmentServiceController@show']);
+    $router->put('/{department}',['as' => 'update', 'uses' => 'GovernmentServiceController@update']);
+    $router->delete('/{department}',['as' => 'delete', 'uses' => 'GovernmentServiceController@destroy']);
+    $router->put('/restore/{department}',['as' => 'restore', 'uses' => 'GovernmentServiceController@restore']);
+    $router->delete('/force-delete/{department}',['as' => 'forceDelete', 'uses' => 'GovernmentServiceController@forceDelete']);
+});
 
 $router->group([
     'prefix' => 'department',

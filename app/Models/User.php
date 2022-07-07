@@ -40,7 +40,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'sub_department_id',
         'leader_id',
         'commander_id',
-        'director_id'
+        'director_id',
+        'u_type'
     ];
 
     /**

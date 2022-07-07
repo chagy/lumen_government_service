@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('government_services', function (Blueprint $table) {
             $table->id();
             $table->foreignId('department_id')->comment('relations departments')->references('id')->on('departments')->cascadeOnDelete();
-            $table->foreignId('sub_department_id')->comment('relations departments')->references('id')->on('departments')->cascadeOnDelete();
+            $table->foreignId('sub_department_id')->nullable()->comment('relations departments')->references('id')->on('departments')->nullOnDelete();
             $table->string('gose_num')->comment('เลขตก.');
             $table->date('gose_save')->comment('วันที่บันทึก');
             $table->date('gose_date')->comment('วันที่ใบ');
@@ -41,11 +41,11 @@ return new class extends Migration
             $table->string('gose_district')->comment('อำเภอ');
             $table->string('gose_province')->comment('จังหวัด');
             $table->integer('gose_traveler')->default(0)->comment('ผู้ร่วมเดินทาง');
-            $table->foreignId('leader_id')->comment('relations users หัวหน้าหน่วย')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreignId('leader_id')->nullable()->comment('relations users หัวหน้าหน่วย')->references('id')->on('users')->nullOnDelete();
             $table->text('leader_comment')->nullable()->comment('ความเห็น หัวหน้าหน่วย');
             $table->tinyInteger('leader_status')->default(99)->comment('สถานะ อนุมัติ 0-ไม่อนุมัติ 1-อนุมัติ 99-รออนุมัติ');
             $table->datetime('leader_date')->nullable()->comment('หัวหน้าหน่วย เวลาอนุมัติ');
-            $table->foreignId('commander_id')->comment('relations users หัวหน้ากลุ่มงาน')->references('id')->on('users')->cascadeOnDelete();
+            $table->foreignId('commander_id')->nullable()->comment('relations users หัวหน้ากลุ่มงาน')->references('id')->on('users')->nullOnDelete();
             $table->text('commander_comment')->nullable()->comment('ความเห็น หัวหน้ากลุ่มงาน');
             $table->tinyInteger('commander_status')->default(99)->comment('สถานะ อนุมัติ 0-ไม่อนุมัติ 1-อนุมัติ 99-รออนุมัติ');
             $table->datetime('commander_date')->nullable()->comment('หัวหน้ากลุ่มงาน เวลาอนุมัติ');

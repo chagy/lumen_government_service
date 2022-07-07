@@ -36,6 +36,7 @@ return new class extends Migration
             $table->foreignId('leader_id')->nullable()->comment('relations users')->references('id')->on('users')->cascadeOnDelete();
             $table->foreignId('commander_id')->nullable()->comment('relations users')->references('id')->on('users')->cascadeOnDelete();
             $table->foreignId('director_id')->nullable()->comment('relations users')->references('id')->on('users')->cascadeOnDelete();
+            $table->tinyInteger('u_type')->default(4)->comment('ประเภทผู้ใช้ 1-ผู้อำนวยการ 2-หัวหน้ากลุ่มงาน 3-หัวหน้าฝ่ายงาน 4-เจ้าหน้าที่');
             $table->timestamps();
             $table->softDeletes();
         });
