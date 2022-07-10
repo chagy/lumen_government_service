@@ -33,6 +33,7 @@ return new class extends Migration
             $table->time('gose_time_start')->comment('เวลาไป');
             $table->date('gose_date_end')->comment('วันที่กลับ');
             $table->time('gose_time_end')->comment('เวลากลับ');
+            $table->double('gose_num_day')->comment('จำนวนวัน');
             $table->tinyInteger('gose_vehicle')->comment('สถานะ พาหนะ 1-ยานพาหนะประจำทาง 2-พาหนะรับจ้าง 3-รถยนต์ส่วนตัว 4-รถราชการ');
             $table->string('gose_car_regis')->nullable()->comment('ทะเบียนรถ');
             $table->foreignId('driver_id')->nullable()->comment('relations users พขร.')->references('id')->on('users')->nullOnDelete();

@@ -25,6 +25,7 @@ class GovernmentService extends Model
         'gose_time_start',
         'gose_date_end',
         'gose_time_end',
+        'gose_num_day',
         'gose_vehicle',
         'gose_car_regis',
         'driver_id',

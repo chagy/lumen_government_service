@@ -56,4 +56,49 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function findForPassport($username) {
        return self::where('username', $username)->first(); // change column name whatever you use in credentials
     }
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class,'department_id');
+    }
+
+    public function subDepartment()
+    {
+        return $this->belongsTo(Department::class,'sub_department_id');
+    }
+
+    public function position()
+    {
+        return $this->belongsTo(Position::class,'position_id');
+    }
+
+    public function subDistrict()
+    {
+        return $this->belongsTo(SubDistrict::class,'sub_district_id');
+    }
+
+    public function district()
+    {
+        return $this->belongsTo(District::class,'district_id');
+    }
+
+    public function province()
+    {
+        return $this->belongsTo(Province::class,'province_id');
+    }
+
+    public function leader()
+    {
+        return $this->belongsTo(User::class,'leader_id');
+    }
+
+    public function commander()
+    {
+        return $this->belongsTo(User::class,'commander_id');
+    }
+
+    public function director()
+    {
+        return $this->belongsTo(User::class,'director_id');
+    }
 }

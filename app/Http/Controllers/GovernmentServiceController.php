@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\GovernmentService;
@@ -33,7 +34,7 @@ class GovernmentServiceController extends Controller
             'gose_province'             => 'required',
             'gose_traveler'             => 'required',
             'gose_desc'                 => 'nullable',
-            'gose_file'                 => 'nullable',
+            'gose_file'                 => 'nullable|mimes:pdf',
         ]);
 
         if($validator->fails()) {
@@ -43,10 +44,17 @@ class GovernmentServiceController extends Controller
             ]);
         }
 
+        $nameFile = null;
+
+        if($request->hasFile('gose_file')) {
+            $nameFile = Str::random(10).date('Y-m-d-H-i').'.pdf';
+            $request->file('gose_file')->move('./documents',$nameFile);
+        }
+
         $gose = GovernmentService::create([
             'department_id'             => Auth::user()->department_id,
             'sub_department_id'         => Auth::user()->sub_department_id,
-            'gose_num'                  => $request->gose_num,
+            'gose_num'                  => Auth::user()->department->depa_num.'/'.$request->gose_num,
             'gose_save'                 => date('Y-m-d'),
             'gose_date'                 => date('Y-m-d'),
             'user_id'                   => Auth::user()->id,
@@ -62,6 +70,7 @@ class GovernmentServiceController extends Controller
             'gose_time_start'           => $request->gose_time_start,
             'gose_date_end'             => $request->gose_date_end,
             'gose_time_end'             => $request->gose_time_end,
+            'gose_num_day'              => $request->gose_num_day,
             'gose_vehicle'              => $request->gose_vehicle,
             'gose_car_regis'            => $request->gose_car_regis,
             'gose_about'                => $request->gose_about,
@@ -73,7 +82,15 @@ class GovernmentServiceController extends Controller
             'commander_id'              => Auth::user()->commander_id,
             'director_id'               => Auth::user()->director_id,
             'gose_desc'                 => $request->gose_desc,
-            'gose_file'                 => $request->gose_file,
+            'gose_file'                 => $nameFile,
+        ]);
+
+        $gose->travelers()->create([
+            'user_id' => Auth::user()->id,
+            'position_id' => Auth::user()->position_id,
+            'gose_item_full_name' => Auth::user()->u_prefix.Auth::user()->u_first_name.' '.Auth::user()->u_last_name,
+            'gose_item_position' => Auth::user()->position->posi_name,
+            'gose_type' => 1,
         ]);
 
         return response()->json([
