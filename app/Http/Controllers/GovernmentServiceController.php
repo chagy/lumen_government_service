@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Models\GovernmentService;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -97,5 +99,34 @@ class GovernmentServiceController extends Controller
             'success' => 'true',
             'data' => $gose
         ]);
+    }
+
+    public function chooseEmployee($government_service,$employee) {
+        $government_service = GovernmentService::findOrFail($government_service);
+        $employee = User::findOrFail($employee);
+
+
+        if(!DB::table('government_service_items')->where('government_service_id',$government_service->id)->where('user_id',$employee->id)->exists()) {
+            $government_service->travelers()->create([
+                'user_id' => $employee->id,
+                'position_id' => $employee->position_id,
+                'gose_item_full_name' => $employee->u_prefix.$employee->u_first_name.' '.$employee->u_last_name,
+                'gose_item_position' => $employee->position->posi_name,
+                'gose_type' => 2,
+            ]);
+
+            return response()->json([
+                'success' => true,
+                'data' => $government_service->travelers,
+            ]);
+        } else {
+            return response()->json([
+                'error' => true,
+                'message' => 'เจ้าหน้าที่ท่านนี้ถูกเลือกไปแล้ว',
+                'data' => $government_service->travelers,
+            ]);
+        }
+
+        
     }
 }

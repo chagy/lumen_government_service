@@ -13,11 +13,13 @@ $router->group([
 ], function () use ($router) {
     $router->get('/',['as' => 'index', 'uses' => 'GovernmentServiceController@index']);
     $router->post('/',['as' => 'store', 'uses' => 'GovernmentServiceController@store']);
-    $router->get('/{department}',['as' => 'show', 'uses' => 'GovernmentServiceController@show']);
-    $router->put('/{department}',['as' => 'update', 'uses' => 'GovernmentServiceController@update']);
-    $router->delete('/{department}',['as' => 'delete', 'uses' => 'GovernmentServiceController@destroy']);
-    $router->put('/restore/{department}',['as' => 'restore', 'uses' => 'GovernmentServiceController@restore']);
-    $router->delete('/force-delete/{department}',['as' => 'forceDelete', 'uses' => 'GovernmentServiceController@forceDelete']);
+    $router->get('/{government_service}',['as' => 'show', 'uses' => 'GovernmentServiceController@show']);
+    $router->put('/{government_service}',['as' => 'update', 'uses' => 'GovernmentServiceController@update']);
+    $router->delete('/{government_service}',['as' => 'delete', 'uses' => 'GovernmentServiceController@destroy']);
+    $router->put('/restore/{government_service}',['as' => 'restore', 'uses' => 'GovernmentServiceController@restore']);
+    $router->delete('/force-delete/{government_service}',['as' => 'forceDelete', 'uses' => 'GovernmentServiceController@forceDelete']);
+
+    $router->get('/choose-employee/{government_service}/{employee}',['as' => 'chooseEmployee','uses' => 'GovernmentServiceController@chooseEmployee']);
 });
 
 $router->group([
