@@ -20,6 +20,7 @@ $router->group([
     $router->delete('/force-delete/{government_service}',['as' => 'forceDelete', 'uses' => 'GovernmentServiceController@forceDelete']);
 
     $router->get('/choose-employee/{government_service}/{employee}',['as' => 'chooseEmployee','uses' => 'GovernmentServiceController@chooseEmployee']);
+    $router->delete('/delete-employee/{government_service}/{employee}',['as' => 'deleteEmployee','uses' => 'GovernmentServiceController@deleteEmployee']);
 });
 
 $router->group([

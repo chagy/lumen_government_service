@@ -9,6 +9,7 @@ use Illuminate\Validation\Rule;
 use App\Models\GovernmentService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\GovernmentServiceItem;
 use Illuminate\Support\Facades\Validator;
 
 class GovernmentServiceController extends Controller
@@ -105,7 +106,6 @@ class GovernmentServiceController extends Controller
         $government_service = GovernmentService::findOrFail($government_service);
         $employee = User::findOrFail($employee);
 
-
         if(!DB::table('government_service_items')->where('government_service_id',$government_service->id)->where('user_id',$employee->id)->exists()) {
             $government_service->travelers()->create([
                 'user_id' => $employee->id,
@@ -118,15 +118,33 @@ class GovernmentServiceController extends Controller
             return response()->json([
                 'success' => true,
                 'data' => $government_service->travelers,
-            ]);
+            ],200);
         } else {
             return response()->json([
                 'error' => true,
                 'message' => 'เจ้าหน้าที่ท่านนี้ถูกเลือกไปแล้ว',
                 'data' => $government_service->travelers,
-            ]);
+            ],400);
         }
+    }
 
-        
+    public function deleteEmployee($government_service,$employee) {
+        $item = GovernmentServiceItem::where('government_service_id',$government_service)
+                    ->where('user_id',$employee)
+                    ->first();
+
+        if($item) {
+            $item->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'ลบข้อมูลเรียบร้อย',
+            ],204);
+        } else {
+            return response()->json([
+                'error' => true,
+                'message' => 'เจ้าหน้าที่ท่านนี้ไม่มีในรายการ',
+                'data' => $government_service->travelers,
+            ],400);
+        }
     }
 }
