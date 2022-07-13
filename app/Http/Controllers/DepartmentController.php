@@ -14,7 +14,7 @@ class DepartmentController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => DepartmentResource::collection($departments)
+            'data' => DepartmentResource::collection($departments)->response()->getData(true)
         ],200);
     }
 

@@ -11,9 +11,20 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\GovernmentServiceItem;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Resources\GornvermentServiceResource;
 
 class GovernmentServiceController extends Controller
 {
+    public function index() {
+        
+        $government_services = GovernmentService::where('user_id',Auth::guard('api')->id())->paginate(20);
+        
+        return response()->json([
+            'success' => true,
+            'data' => GornvermentServiceResource::collection($government_services)->response()->getData(true)
+        ]);
+    }
+
     public function store(Request $request) {
         $validator = Validator::make($request->all(),[
             'gose_num'                  => 'required',

@@ -80,11 +80,11 @@ class GovernmentService extends Model
     }
 
     public function commander() {
-        return $this->belongsTo(Commander::class,'commader_id');
+        return $this->belongsTo(User::class,'commader_id');
     }
 
     public function director() {
-        return $this->belongsTo(Director::class,'director_id');
+        return $this->belongsTo(User::class,'director_id');
     }
 
     public function travelers() {
