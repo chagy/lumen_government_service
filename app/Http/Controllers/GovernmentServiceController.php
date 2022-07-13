@@ -224,4 +224,14 @@ class GovernmentServiceController extends Controller
             ],400);
         }
     }
+
+    public function destroy($government_service) {
+        $government_service = GovernmentService::findOrFail($government_service);
+        $government_service->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'ลบข้อมูลเรียบร้อย'
+        ],204);
+    }
 }

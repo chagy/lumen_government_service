@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class GovernmentService extends Model
 {
+    use SoftDeletes;
+    
     protected $fillable = [
         'department_id',
         'sub_department_id',
