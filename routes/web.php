@@ -12,24 +12,19 @@ $router->group([
     'middleware'    => 'auth:api'
 ], function () use ($router) {
     
-
     $router->get('/',['as' => 'index', 'uses' => 'GovernmentServiceController@index']);
-    $router->post('/',['as' => 'store', 'uses' => 'GovernmentServiceController@store']);
-    $router->get('/{government_service}',['as' => 'show', 'uses' => 'GovernmentServiceController@show']);
-    $router->post('/{government_service}',['as' => 'update', 'uses' => 'GovernmentServiceController@update']);
-    $router->delete('/{government_service}',['as' => 'delete', 'uses' => 'GovernmentServiceController@destroy']);
+    $router->post('/store',['as' => 'store', 'uses' => 'GovernmentServiceController@store']);
+    $router->get('/approve',['as' => 'approve.list','uses' => 'GovernmentServiceController@listApprove']);
+    $router->get('/show/{government_service}',['as' => 'show', 'uses' => 'GovernmentServiceController@show']);
+    $router->post('/update/{government_service}',['as' => 'update', 'uses' => 'GovernmentServiceController@update']);
+    $router->delete('/delete/{government_service}',['as' => 'delete', 'uses' => 'GovernmentServiceController@destroy']);
     $router->put('/restore/{government_service}',['as' => 'restore', 'uses' => 'GovernmentServiceController@restore']);
     $router->delete('/force-delete/{government_service}',['as' => 'forceDelete', 'uses' => 'GovernmentServiceController@forceDelete']);
 
     $router->get('/choose-employee/{government_service}/{employee}',['as' => 'chooseEmployee','uses' => 'GovernmentServiceController@chooseEmployee']);
     $router->delete('/delete-employee/{government_service}/{employee}',['as' => 'deleteEmployee','uses' => 'GovernmentServiceController@deleteEmployee']);
 
-    $router->group([
-        'prefix' => 'approve',
-        'as' => 'approve.'
-    ],function () use ($router) {
-        $router->get('/',['as' => 'list.approve','uses' => 'GovernmentServiceController@listApprove']);
-    });
+    $router->put('/approve/{government_service}',['as' => 'approve.one','uses' => 'GovernmentServiceController@oneApprove']);
 });
 
 $router->group([
