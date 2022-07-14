@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class GornvermentServiceResource extends JsonResource
+class GovernmentServiceResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -62,6 +62,7 @@ class GornvermentServiceResource extends JsonResource
             'created_at'              => $this->created_at,
             'updated_at'              => $this->updated_at,
             'deleted_at'              => $this->deleted_at,
+            'travelers'                => GovernmentServiceItemResource::collection($this->travelers)
         ];
     }
 }

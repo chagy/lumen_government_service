@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Models\GovernmentServiceItem;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Resources\GornvermentServiceResource;
+use App\Http\Resources\GovernmentServiceResource;
 
 class GovernmentServiceController extends Controller
 {
@@ -21,7 +21,7 @@ class GovernmentServiceController extends Controller
         
         return response()->json([
             'success' => true,
-            'data' => GornvermentServiceResource::collection($government_services)->response()->getData(true)
+            'data' => GovernmentServiceResource::collection($government_services)->response()->getData(true)
         ]);
     }
 
@@ -109,7 +109,7 @@ class GovernmentServiceController extends Controller
 
         return response()->json([
             'success' => 'true',
-            'data' => $gose
+            'data' => new GovernmentServiceResource($gose)
         ]);
     }
 
@@ -186,7 +186,7 @@ class GovernmentServiceController extends Controller
 
         return response()->json([
             'success' => 'true',
-            'data' => $government_service
+            'data' => new GovernmentServiceResource($government_service)
         ]);
     }
 
@@ -264,5 +264,31 @@ class GovernmentServiceController extends Controller
             'success' => true,
             'message' => 'ลบข้อมูลเรียบร้อย'
         ],204);
+    }
+
+    public function listApprove() {
+        $lists = [];
+        $type = Auth::guard('api')->user()->u_type;
+        $user_id = Auth::guard('api')->id();
+
+        switch ($type) {
+            case 1:
+                $lists = GovernmentService::where('director_id',$user_id)->where('gose_send',2)->paginate(20);
+                break;
+            case 2:
+                $lists = GovernmentService::where('commander_id',$user_id)->where('gose_send',3)->paginate(20);
+                break;
+            case 3:
+                $lists = GovernmentService::where('leader_id',$user_id)->where('gose_send',4)->paginate(20);
+                break;
+            default:
+                $lists = [];
+                break;
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => GovernmentServiceResource::collection($lists)->response()->getData(true)
+        ]);
     }
 }

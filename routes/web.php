@@ -11,6 +11,8 @@ $router->group([
     'as'            => 'government.service.',
     'middleware'    => 'auth:api'
 ], function () use ($router) {
+    
+
     $router->get('/',['as' => 'index', 'uses' => 'GovernmentServiceController@index']);
     $router->post('/',['as' => 'store', 'uses' => 'GovernmentServiceController@store']);
     $router->get('/{government_service}',['as' => 'show', 'uses' => 'GovernmentServiceController@show']);
@@ -21,6 +23,13 @@ $router->group([
 
     $router->get('/choose-employee/{government_service}/{employee}',['as' => 'chooseEmployee','uses' => 'GovernmentServiceController@chooseEmployee']);
     $router->delete('/delete-employee/{government_service}/{employee}',['as' => 'deleteEmployee','uses' => 'GovernmentServiceController@deleteEmployee']);
+
+    $router->group([
+        'prefix' => 'approve',
+        'as' => 'approve.'
+    ],function () use ($router) {
+        $router->get('/',['as' => 'list.approve','uses' => 'GovernmentServiceController@listApprove']);
+    });
 });
 
 $router->group([
