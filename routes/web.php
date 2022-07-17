@@ -5,6 +5,14 @@ $router->get('/test/auth',['middleware' => 'auth:api',function() {
     return auth()->user();
 }]);
 
+$router->group([
+    'prefix' => 'users',
+    'as' => 'user',
+    'middleware' => 'auth:api'
+], function () use ($router) {
+    $router->get('/',['as' => 'index', 'uses' => 'UserController@index']);
+});
+
 
 $router->group([
     'prefix'        => 'government-service',
