@@ -357,4 +357,68 @@ class GovernmentServiceController extends Controller
             ]);
         }
     }
+
+    public function multiApprove(Request $request) {
+        $type = Auth::guard('api')->user()->u_type;
+        $user_id = Auth::guard('api')->id();
+        $ids = $request->ids;
+        $condition = [];
+        $approve = [];
+
+        switch ($type) {
+            case 1:
+                $condition = [
+                    'director_id' => $user_id,
+                    'gose_send' => 2
+                ];
+                $approve = [
+                    'director_comment' => $request->comment,
+                    'director_status' => $request->status,
+                    'director_date' => date('Y-m-d H:i:s'),
+                    'gose_status' => $request->status,
+                    'gose_send' => 1
+                ];
+                break;
+            case 2:
+                $condition = [
+                    'commander_id' => $user_id,
+                    'gose_send' => 3
+                ];
+                $approve = [
+                    'commander_comment' => $request->comment,
+                    'commander_status' => $request->status,
+                    'commander_date' => date('Y-m-d H:i:s'),
+                    'gose_status' => $request->status == 0 ? 0 : 99,
+                    'gose_send' => $request->status == 0 ? 1 : 2
+                ];
+                break;
+            case 3:
+                $condition = [
+                    'leader_id' => $user_id,
+                    'gose_send' => 4
+                ];
+                $approve = [
+                    'leader_comment' => $request->comment,
+                    'leader_status' => $request->status,
+                    'leader_date' => date('Y-m-d H:i:s'),
+                    'gose_status' => $request->status == 0 ? 0 : 99,
+                    'gose_send' => $request->status == 0 ? 1 : 3
+                ];
+                break;
+            default:
+                $condition = [];
+                $approve = [];
+                break;
+        }
+
+        if(!empty($condition) && !empty($approve)) {
+            $government_services = GovernmentService::whereIn('id',$ids)->where($condition);
+            $government_services->update($approve);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'อนุมัติข้อมูลเรียบร้อยแล้ว'
+            ],204);
+        }
+    }
 }

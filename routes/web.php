@@ -25,6 +25,7 @@ $router->group([
     $router->delete('/delete-employee/{government_service}/{employee}',['as' => 'deleteEmployee','uses' => 'GovernmentServiceController@deleteEmployee']);
 
     $router->put('/approve/{government_service}',['as' => 'approve.one','uses' => 'GovernmentServiceController@oneApprove']);
+    $router->put('/approves',['as' => 'approve.multi','uses' => 'GovernmentServiceController@multiApprove']);
 });
 
 $router->group([
